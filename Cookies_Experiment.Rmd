@@ -1,0 +1,60 @@
+---
+title: "Cookies Experiment"
+output: html_notebook
+---
+
+
+```{r}
+cookies = read.csv('Cookie data.csv')
+colnames(cookies) = c("Treatments","Height","Diameter")
+Treatment <- as.factor(cookies$Treatment)
+
+```
+
+
+```{r}
+mean(cookies$Height[cookies$Treatment == 'Baking Soda'])
+mean(cookies$Diameter[cookies$Treatment == 'Baking Soda'])
+
+```
+```{r}
+mean(cookies$Height[cookies$Treatment == 'Baking Powder'])
+mean(cookies$Diameter[cookies$Treatment == 'Baking Powder'])
+```
+
+
+```{r}
+mean(cookies$Height[cookies$Treatment == 'Control'])
+mean(cookies$Diameter[cookies$Treatment == 'Control'])
+```
+```{r}
+factor(cookies$Treatment)
+png("height_boxplot.png", width = 400, height = 400)
+boxplot(Height ~ Treatment, data = cookies, ylab = "Height (mm)")
+dev.off()
+png("diameter_boxplot.png", width = 400, height = 400)
+boxplot(Diameter ~ Treatment, data = cookies,  ylab = 'Diameter (mm)')
+dev.off()
+```
+```{r}
+diameter_model = aov(Diameter ~ Treatment, data = cookies)
+summary(diameter_model)
+```
+
+```{r}
+height_model = aov(Diameter ~ Treatment, data = cookies)
+summary(height_model)
+```
+```{r}
+```
+
+
+```{r}
+pairwise.t.test(x = cookies$Diameter, g = Treatment, p.adjust.method = 'bonferroni')
+```
+
+
+```{r}
+pairwise.t.test(x = cookies$Height, g = Treatment, p.adjust.method = 'bonferroni')
+```
+
